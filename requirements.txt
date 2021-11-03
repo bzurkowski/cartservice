@@ -1,5 +1,6 @@
 grpcio
+grpcio-health-checking
 grpcio-tools
+honcho
 pymongo
 python-json-logger
-grpcio-health-checking

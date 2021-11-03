@@ -31,8 +31,10 @@ RUN pip install -r requirements.txt
 
 COPY . /app
 
+RUN pip install .
+
 ENV PYTHONUNBUFFERED=0
 
 EXPOSE 7070
 
-CMD [ "honcho", "start" ]
+CMD [ "honcho", "--no-prefix", "start" ]
