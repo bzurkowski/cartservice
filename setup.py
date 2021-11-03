@@ -21,4 +21,9 @@ setup(
     license='Apache License 2.0',
     install_requires=get_requirements(),
     packages=find_packages(),
+    entry_points={
+        'console_scripts': [
+            'server = cartservice.server:main',
+        ]
+    },
     zip_safe=False)
