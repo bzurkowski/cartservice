@@ -25,7 +25,7 @@ LOG = logger.get_logger(__name__)
 class CartService(cart_pb2_grpc.CartServiceServicer):
 
     def Connection(self):
-        mongodb_url = os.environ.get("MONGO_DB_URL")
+        mongodb_url = os.environ.get("MONGODB_URL")
         client = MongoClient(mongodb_url)
         db = client.get_database("hipster", write_concern=WriteConcern(w=3, wtimeout=30000))
         collection = db.carts
