@@ -17,7 +17,7 @@ import os
 from pymongo import MongoClient
 from pymongo.write_concern import WriteConcern
 
-from cartservice import cart_pb2, cart_pb2_grpc, logger
+from cartservice import cart_pb2, cart_pb2_grpc, logger, exceptions
 
 LOG = logger.get_logger(__name__)
 
@@ -49,9 +49,9 @@ class CartService(cart_pb2_grpc.CartServiceServicer):
                     item["quantity"] += quantity
             cart_col.replace_one({"user_id": user_id}, cart)
             return cart_pb2.Empty()
-        except Exception as ex:
+        except Exception:
             LOG.error("Unable to access cart storage")
-            raise Exception("Unable to access cart storage")
+            raise exceptions.CartserviceError("Unable to access cart storage")
 
     def GetCart(self, request, context):
         try:
@@ -64,9 +64,9 @@ class CartService(cart_pb2_grpc.CartServiceServicer):
                     user_id=user_id,
                     items=[cart_pb2.CartItem(**item) for item in cart["items"]])
             return cart_pb2.Empty()
-        except Exception as ex:
+        except Exception:
             LOG.error("Unable to access cart storage")
-            raise Exception("Unable to access cart storage")
+            raise exceptions.CartserviceError("Unable to access cart storage")
 
     def EmptyCart(self, request, context):
         try:
@@ -74,6 +74,6 @@ class CartService(cart_pb2_grpc.CartServiceServicer):
             cart_col = self.Connection()
             cart_col.delete_one({"user_id": request.user_id})
             return cart_pb2.Empty()
-        except Exception as ex:
+        except Exception:
             LOG.error("Unable to access cart storage")
-            raise Exception("Unable to access cart storage")
+            raise exceptions.CartserviceError("Unable to access cart storage")
