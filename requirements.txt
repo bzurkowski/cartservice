@@ -1,6 +1,6 @@
-grpcio
-grpcio-health-checking
-grpcio-tools
-honcho
-pymongo
-python-json-logger
+grpcio==1.41.1
+grpcio-health-checking==1.41.1
+grpcio-tools==1.41.1
+honcho==1.1.0
+pymongo==3.12.1
+python-json-logger==2.0.2
