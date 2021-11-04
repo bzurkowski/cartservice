@@ -72,8 +72,11 @@ class CartService(cart_pb2_grpc.CartServiceServicer):
         try:
             LOG.info("Removing cart (%s)", request)
             cart_col = self.Connection()
-            cart_col.delete_one({"user_id": request.user_id})
+            user_id = request.user_id
+            cart = cart_col.find_one({"user_id": user_id})
+            if cart:
+                cart_col.delete_one({"_id": cart["_id"]})
             return cart_pb2.Empty()
-        except Exception:
-            LOG.error("Unable to access cart storage")
+        except Exception as ex:
+            LOG.error("Unable to access cart storage: %s", str(ex))
             raise exceptions.CartserviceError("Unable to access cart storage")
