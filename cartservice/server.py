@@ -9,7 +9,7 @@ from cartservice import cart_pb2, cart_pb2_grpc, cart_service, logger
 
 LOG = logger.get_logger(__name__)
 
-MAX_WORKERS = 1
+MAX_WORKERS = 10
 
 
 def serve():
