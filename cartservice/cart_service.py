@@ -63,6 +63,6 @@ class CartService(cart_pb2_grpc.CartServiceServicer):
             if cart:
                 cart_col.delete_one({"_id": cart["_id"]})
             return cart_pb2.Empty()
-        except Exception as ex:
-            LOG.error("Unable to access cart storage: %s", str(ex))
+        except Exception:
+            LOG.error("Unable to access cart storage")
             raise exceptions.CartserviceError("Unable to access cart storage")
